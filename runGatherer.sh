@@ -21,7 +21,7 @@ source variables.conf
 home_dir=$CRONJOBS_DIR
 server=$SERVER
 passwd=$REGAL_PASSWORD
-project=$INDEXNAME
+project=$NAMESPACE
 regalApi=$BACKEND
 
 if [ ! -d $REGAL_LOGS ]; then
@@ -34,7 +34,7 @@ echo "home-Verzeichnis: $home_dir"
 echo "Projekt: $project"
 echo "Server: $server"
 
-runGatherer=`curl -XPOST -u$ADMIN_USER:$passwd "$PROTOCOL://$regalApi/utils/runGatherer"`
+runGatherer=`curl -XPOST -u$REGAL_ADMIN:$passwd "$PROTOCOL://$regalApi/utils/runGatherer"`
 echo "$runGatherer\n"; # Ausgabe in Log-Datei
 
 echo "siehe Log-Datei $REGAL_APP/logs/webgatherer.log"

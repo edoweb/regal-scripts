@@ -46,7 +46,7 @@ fi
 home_dir=$CRONJOBS_DIR
 server=$SERVER
 passwd=$REGAL_PASSWORD
-project=$INDEXNAME
+project=$NAMESPACE
 regalApi=$BACKEND
 urn_api=$OAI_PMH
 oai_id="oai:api.$server:"
@@ -186,7 +186,7 @@ do
     
     # >>> Test für eine einzelne ID
     # if [ "$modus" = "register" ]; then
-    #   addURN=`curl -XPOST -u$ADMIN_USER:$passwd "https://$regalApi/utils/addUrn?id=${id:7}&namespace=$NAMESPACE&snid=hbz:929:02"`
+    #   addURN=`curl -XPOST -u$ADMIN_USER:$passwd "$PROTOCOL://$regalApi/utils/addUrn?id=${id:7}&namespace=$NAMESPACE&snid=hbz:929:02"`
     #   echo "$addURN\n"; # Ausgabe in log-Datei
     #   addURNresponse=${addURN:0:80}
     #   echo -e "$url\t$cdate\t$cat\t$dnb\t$contentType\t\t$addURNresponse" >> $outdatei
@@ -196,7 +196,7 @@ do
 
     if [ "$modus" = "register" ] && [ "$dnb" != "J" ]; then
       # Nachregistrierung des Objektes für URN-Vergabe
-      addURN=`curl -XPOST -u$ADMIN_USER:$passwd "https://$regalApi/utils/addUrn?id=${id:7}&namespace=$NAMESPACE&snid=hbz:929:02"`
+      addURN=`curl -XPOST -u$REGAL_ADMIN:$passwd "$PROTOCOL://$regalApi/utils/addUrn?id=${id:7}&namespace=$NAMESPACE&snid=hbz:929:02"`
       echo "$aktdate: $addURN\n"; # Ausgabe in log-Datei
       addURNresponse=${addURN:0:80}
       echo -e "$url\t$cdate\t$cat\t$dnb\t$contentType\t\t$addURNresponse" >> $outdatei
@@ -210,7 +210,7 @@ do
       # Ausgabe und Weiterbehandlung nur im Fehlerfalle
       # minimalen Update auf das Objekt machen, z.B. über erneutes Setzen der Zugriffrechte
       # dadurch wird das Objekt dann an der Katalogschnittstelle gemeldet
-      update=`curl -H "Content-Type: application/json" -XPATCH -u$ADMIN_USER:$passwd -d'{"publishScheme":"public"}' "https://$regalApi/resource/$id"`
+      update=`curl -H "Content-Type: application/json" -XPATCH -u$ADMIN_USER:$passwd -d'{"publishScheme":"public"}' "$PROTOCOL://$regalApi/resource/$id"`
       echo "$aktdate: $update\n"; # Ausgabe in log-Datei
       updateResponse=${update:0:80}
       echo -e "$url\t$cdate\t$cat\t$contentType\t\t$updateResponse" >> $outdatei
@@ -252,5 +252,3 @@ if [ -s $outdatei ]; then
   mailx -s "$subject" $recipients < $mailbodydatei
   # rm $mailbodydatei
 fi
-
-cd-

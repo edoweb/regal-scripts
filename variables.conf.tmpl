@@ -1,6 +1,7 @@
 #
 # Project,Namespace,Indexname
 #
+NAMESPACE=edoweb
 INDEXNAME=regal
 #
 # Layout
@@ -13,7 +14,7 @@ REGAL_TMP=$REGAL_HOME/tmp
 REGAL_BACKUP=$REGAL_HOME/backup
 HERITRIX_DIR=$REGAL_HOME/heritrix-data
 APACHE_LOG=/var/log/apache2
-APACHE_ACCESS_LOGNAME=other_vhosts_access.log
+APACHE_ACCESS_LOGNAME=other_vhosts_access
 CRONJOBS_DIR=$REGAL_HOME/regal-scripts
 TOMCAT_HOME=$REGAL_HOME/fedora/tomcat
 TOMCAT_CONF=$TOMCAT_HOME/conf
@@ -35,6 +36,7 @@ MATOMO_PASSWORD=$REGAL_PASSWORD
 # Web-APIs
 #
 SERVER=localhost
+PROTOCOL=https
 BACKEND=http://api.localhost
 FRONTEND=http://$SERVER
 HERITRIX_URL=https://localhost:8443
